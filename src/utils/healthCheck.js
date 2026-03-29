@@ -2,7 +2,7 @@ const express = require('express');
 const logger = require('./logger');
 
 const app = express();
-const PORT = process.env.HEALTH_PORT || 3000;
+const PORT = process.env.PORT || process.env.HEALTH_PORT || 7860;
 
 let healthState = {
     status: 'starting',
