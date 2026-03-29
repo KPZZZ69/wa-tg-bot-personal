@@ -40,6 +40,11 @@ if (bot) {
             return ctx.reply('❌ No active WhatsApp chat mapped to this thread. Wait for an incoming message first.');
         }
 
+        // Strictly prevent sending to group chats
+        if (waId.endsWith('@g.us')) {
+             return ctx.reply('❌ Cannot send messages to WhatsApp groups. This bot is restricted to private chats only.');
+        }
+
         try {
             
             let textToSend = ctx.message.text;
@@ -71,7 +76,11 @@ if (bot) {
 async function startTelegramBot() {
     if (bot) {
         bot.catch((err) => {
-            logger.error('Telegram Bot Error:', { error: err.message });
+            if (err.message.includes('409') || err.message.includes('Conflict')) {
+                logger.error('CRITICAL ERROR: Telegram Bot Conflict. Another instance of this bot is likely running with the same token.');
+            } else {
+                logger.error('Telegram Bot Error:', { error: err.message });
+            }
         });
         
         bot.start({

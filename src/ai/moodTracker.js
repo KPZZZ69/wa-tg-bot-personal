@@ -16,7 +16,7 @@ async function analyzeMood(wa_id) {
         const textLogs = msgs.map(m => `[${m.direction === 'in' ? 'Contact' : 'User'}]: ${m.body}`).join('\n');
 
         const response = await openai.chat.completions.create({
-            model: 'gemini-2.5-flash',
+            model: 'gemini-1.5-flash',
             messages: [
                 {
                     role: 'system',

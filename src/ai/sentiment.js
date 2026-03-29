@@ -12,7 +12,7 @@ async function analyzeSentiment(text) {
 
     try {
         const response = await openai.chat.completions.create({
-            model: 'gemini-2.5-flash',
+            model: 'gemini-1.5-flash',
             messages: [
                 {
                     role: 'system',

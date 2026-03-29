@@ -16,6 +16,12 @@ async function handleMessage(msg, client) {
         const contact = await msg.getContact();
         const chat = await msg.getChat();
         
+        // Strictly ignore group chats
+        if (chat.isGroup) {
+             logger.debug(`Ignoring message from group: ${chat.id._serialized}`);
+             return;
+        }
+
         db.upsertContact(contact.id._serialized, contact.name || contact.pushname, contact.number);
 
         if (!msg.fromMe && isSpam(msg.body)) {
@@ -57,6 +63,11 @@ async function handleMessage(msg, client) {
 async function handleReaction(reaction, client) {
     if (reaction.id.fromMe) return;
 
+    // Strictly ignore group chat reactions
+    if (reaction.id.remote && reaction.id.remote.endsWith('@g.us')) {
+        return;
+    }
+
     try {
         if (routeToTelegram) {
             await routeToTelegram({
@@ -70,6 +81,11 @@ async function handleReaction(reaction, client) {
 }
 
 async function handleCall(call, client) {
+    // Strictly ignore group calls (if any)
+    if (call.from && call.from.endsWith('@g.us')) {
+        return;
+    }
+
     if (routeToTelegram) {
         await routeToTelegram({
             type: 'call',

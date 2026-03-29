@@ -88,5 +88,13 @@ waClient.on('call', async call => await handleCall(call, waClient));
 module.exports = {
     waClient,
     setQrCallback,
-    startClient: () => waClient.initialize()
+    startClient: async () => {
+        try {
+            logger.info('Initializing WhatsApp client...');
+            await waClient.initialize();
+        } catch (err) {
+            logger.error('CRITICAL: WhatsApp client initialization failed.', { error: err.message });
+            process.exit(1);
+        }
+    }
 };

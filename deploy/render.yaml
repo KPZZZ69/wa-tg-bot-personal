@@ -23,7 +23,12 @@ services:
         value: "/app/data"
       - key: AUTO_REPLY_DELAY_MS
         value: "20000"
-    disk:
-      name: data
-      mountPath: /app/data
-      sizeGB: 1
+      - key: PORT
+        value: "3000"
+      - key: HEALTH_PORT
+        value: "3000"
+    # To use a persistent disk ($7/mo Starter Plan), uncomment the section below:
+    # disk:
+    #   name: data
+    #   mountPath: /app/data
+    #   sizeGB: 1
