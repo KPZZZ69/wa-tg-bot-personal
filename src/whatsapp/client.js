@@ -6,10 +6,19 @@ const { updateHealth } = require('../utils/healthCheck');
 const { handleMessage, handleReaction, handleCall } = require('./handlers');
 
 const puppeteerOptions = {
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
+    args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-accelerated-2d-canvas',
+        '--no-first-run',
+        '--no-zygote',
+        '--single-process', // <- This can significantly reduce memory but can be unstable
+        '--disable-gpu'
+    ]
 };
-if (process.env.PUPPETEER_SKIP_CHROMIUM_DOWNLOAD === 'true') {
-    puppeteerOptions.executablePath = '/usr/bin/chromium';
+if (process.env.PUPPETEER_EXECUTABLE_PATH) {
+    puppeteerOptions.executablePath = process.env.PUPPETEER_EXECUTABLE_PATH;
 }
 
 const waClient = new Client({
