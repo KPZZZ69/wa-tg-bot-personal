@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  bot:
+    build: .
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    restart: always
+
+# Removed Redis completely for 100% free setup!

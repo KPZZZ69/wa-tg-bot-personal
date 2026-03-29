@@ -1,0 +1,9 @@
+app = "wa-tg-bot"
+primary_region = "sin"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[[mounts]]
+  source = "wa_session_data"
+  destination = "/app/data"
