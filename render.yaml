@@ -18,9 +18,9 @@ services:
       - key: PUPPETEER_EXECUTABLE_PATH
         value: "/usr/bin/chromium"
       - key: DB_PATH
-        value: "/app/data/bot.db"
+        value: "data/bot.db"
       - key: DATA_PATH
-        value: "/app/data"
+        value: "data"
       - key: AUTO_REPLY_DELAY_MS
         value: "20000"
       - key: PORT
