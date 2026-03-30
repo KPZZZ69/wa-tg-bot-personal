@@ -11,11 +11,11 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a non-root user
-RUN useradd -m -u 1000 botuser
+RUN useradd -m -u 1001 botuser
 WORKDIR /home/botuser/app
 
 # Set application paths
-ENV HOME=/app \
+ENV HOME=/home/botuser \
     PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium \
     PORT=3000
