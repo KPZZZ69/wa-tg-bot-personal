@@ -14,12 +14,11 @@ RUN apt-get update && apt-get install -y \
 RUN useradd -m -u 1000 botuser
 WORKDIR /home/botuser/app
 
-# Set env for Hugging Face
-ENV HOME=/home/botuser \
-    PATH=/home/botuser/.local/bin:$PATH \
+# Set application paths
+ENV HOME=/app \
     PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium \
-    PORT=7860
+    PORT=3000
 
 # Copy package files first for caching
 COPY --chown=botuser package*.json ./
@@ -34,7 +33,7 @@ RUN mkdir -p /home/botuser/app/data /home/botuser/app/logs && \
 
 USER botuser
 
-EXPOSE 7860
+EXPOSE 3000
 
 # Use the PORT environment variable for the health check/server
 CMD ["npm", "start"]
