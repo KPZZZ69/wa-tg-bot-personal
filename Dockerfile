@@ -18,7 +18,7 @@ WORKDIR /home/botuser/app
 ENV HOME=/home/botuser \
     PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium \
-    PORT=3000
+    PORT=7860
 
 # Copy package files first for caching
 COPY --chown=botuser package*.json ./
@@ -33,7 +33,7 @@ RUN mkdir -p /home/botuser/app/data /home/botuser/app/logs && \
 
 USER botuser
 
-EXPOSE 3000
+EXPOSE 7860
 
 # Use the PORT environment variable for the health check/server
 CMD ["npm", "start"]
